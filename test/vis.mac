@@ -1,0 +1,82 @@
+# print macro commands on screen
+/control/verbose 1
+
+# geometry must be specified before /run/initialize
+#/geometry/source /home/jlab/github/MonteCarlo/geometry/generator/test_output.tg
+# /geometry/source ../geometry/generator/outer_tiling_test.gdml
+#/geometry/source ../geometry/generator/calo_only_PEN.gdml
+#/geometry/source ../geometry/generator/calo_plus_atar_nominal.gdml
+/geometry/source ../geometry/generator/atar_only_substructure.gdml
+#/geometry/source ../geometry/generator/atar_only_nominal.gdml
+#/geometry/source ../geometry/generator/gdml/calo_only_nominal.gdml
+#/geometry/source Single_HEXA_crystal.gdml
+#/geometry/source ../analysis/lxe_depth_scan/x0_scan/output_12_radiation_lengths.gdml
+#/geometry/source ../analysis/lxe_depth_scan/x0_scan/output_LXe_25_radiation_lengths.gdml 
+#/geometry/source ../analysis/2021/lxe_depth_scan/x0_scan_calo_only/output_LXe_25_radiation_lengths.gdml
+/physics_lists/select QGSP_BERT
+/decay/pienu
+# cmd below becomes available only when the cmd above is used
+#/physics_lists/factory/addOptical
+## turn off unnecessary output
+#/process/optical/verbose 0
+## must be run after the cmds above
+/output/saveFullFile true
+/run/initialize
+
+/analysis/setFileName pienux_out.root
+
+#/gps/particle pi+
+##/gps/particle mu+
+#/gps/energy 0.0 MeV
+#/gps/pos/type Volume
+#/gps/pos/shape Para
+#/gps/pos/centre 0 0 0 mm
+#/gps/pos/halfx 2 mm
+#/gps/pos/halfy 2 mm
+#/gps/pos/halfz 2 mm
+
+### Particles in 1 direction, uniform energy range
+#/gps/particle neutron
+#/gps/ene/type Lin
+##/gps/ene/min 49.99999 MeV
+##/gps/ene/max 50. MeV
+#/gps/ene/min 0.0001 MeV
+#/gps/ene/max 0.10 MeV
+#/gps/ene/gradient 0.01
+#/gps/ene/intercept -1000000
+#/gps/pos/type Volume
+#/gps/pos/shape Para
+#/gps/pos/centre 0 0 10 mm
+#/gps/pos/halfx 0 mm
+#/gps/pos/halfy 0 mm
+#/gps/pos/halfz 0 mm
+#/gps/ang/type beam1d
+##/gps/ang/rot1 1 0 0
+##/gps/ang/rot2 0 -1 0
+#/gps/direction 0 1 0
+
+/gps/particle pi+
+/gps/ene/type Gauss
+/gps/ene/mono 18.59 MeV
+/gps/ene/sigma 0.7 MeV
+/gps/pos/type Beam
+/gps/pos/shape Circle
+/gps/pos/radius 12 mm
+/gps/pos/centre 0.0 0.0 -30.0 cm
+/gps/pos/sigma_r 2.5 mm
+/gps/ang/type beam1d
+/gps/ang/sigma_r 0.0 rad
+/gps/ang/rot1 1 0 0
+/gps/ang/rot2 0 -1 0
+
+# visualize geometry and events for debugging
+#/vis/open HepRepFile
+#/vis/open DAWNFILE
+##/vis/open VRML2FILE
+#/vis/drawVolume
+#/vis/scene/add/trajectories
+
+# dump a few events on screen for debugging
+/random/setSeeds  121 1212
+/tracking/verbose 0
+/run/beamOn 300

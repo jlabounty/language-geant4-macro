@@ -1,0 +1,25 @@
+{
+    "name": "geant4-macro-highlighting",
+    "displayName": "geant4-macro-highlighting",
+    "description": "Syntax highlighting for Geant4 Macro files",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "geant4mac",
+            "aliases": ["Geant4 Macro", "geant4mac"],
+            "extensions": [".mac"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "geant4mac",
+            "scopeName": "",
+            "path": "./syntaxes/geant4mac.tmLanguage.json"
+        }]
+    }
+}
